@@ -1,7 +1,7 @@
 from manim import *
 class FourierManim(Scene):
     CONFIG={
-        'wait_time': 2,
+        'wait_time': 22,
         'vector_config':{
             'max_tip_length_to_length_ratio':.25,
             'tip_length': 0.15,
@@ -9,15 +9,16 @@ class FourierManim(Scene):
         },
         'vector_time':ValueTracker(0),
         'center_point':ORIGIN,
+        'n_vectors':10,
     }
     def construct(self):
         vector= self.get_rotating_vectors()
         self.add(vector)
         self.wait(self.CONFIG['wait_time'])
     def get_freqs(self):
-        return [1,2,3]
+        return [1,2,3,4,5]
     def get_coefficients(self):
-        return [2,4,6]
+        return [.2,.4,.6,.8,1]
     def get_rotating_vectors(self,freqs=None, coeffs=None):
         vectors=VGroup()
         self.center_tracker=VectorizedPoint(self.CONFIG['center_point'])
