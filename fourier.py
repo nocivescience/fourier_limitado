@@ -4,7 +4,7 @@ import operator as op
 import functools as ft
 class FourierManim(Scene):
     CONFIG={
-        'wait_time': 12,
+        'wait_time': 122,
         'vector_config':{
             'max_tip_length_to_length_ratio':.25,
             'tip_length': 0.15,
@@ -111,30 +111,4 @@ class FourierManim(Scene):
         broken_path.set_color(YELLOW_B)
         broken_path.add_updater(update_path)
         return broken_path
-    def get_y_component_wave(self,vectors,left_x=1,color=PINK, n_copies=2,right_shift_rate=5):
-        path=self.get_vector_sum_path(vectors)
-        wave=ParametricFunction(
-            lambda t: op.add(
-                right_shift_rate*t*LEFT,
-                path.function(t)[1]*UP
-            ),
-            t_range=[0,1]  #poner path.t_range[0], poner path.t_range[1]
-        )
-        wave_copies=VGroup(*[
-            wave.copy()
-            for x in range(n_copies)
-        ]).arrange(RIGHT,buff=0)
-        top_point=wave_copies.get_top()
-        wave.creation=Create(wave,run_time=self.CONFIG['low_factor'], rate_Func=linear)
-        cycle_animation(wave.creation)
-        wave.add_updater(
-            lambda m: m.shift((m.get_left()[0]-left_x)*LEFT)
-        )
-        def update_wave_copies(wcs):
-            index=int(wave.creation.total_time*self.CONFIG['low_factor'])
-            wcs[:index].match_style(wave)
-            wcs[index:].set_stroke(width=0)
-            wcs.next_to(wave,RIGHT,buff=0)
-            wcs.align_to(top_point, UP)
-        wave_copies.add_updater(update_wave_copies)
-        return VGroup(wave,wave_copies)
+    
